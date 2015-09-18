@@ -16,9 +16,13 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
   desc 'Manage s3ql_mounts'
 
-  commands  :s3ql   => 'mount.s3ql'
+  mk_resource_methods
+
+  # This is mostly for documentation purposes, since we have to execute most
+  # commands as a specific user, we cannot use the #commands wrapper
+  commands  :unused_mount_s3ql   => 'mount.s3ql'
+  commands  :unused_umount_s3ql  => 'umount.s3ql'
   commands  :mount  => 'mount'
-  commands  :umount => 'umount.s3ql'
 
   mk_resource_methods
 
@@ -30,6 +34,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
       # and initialize @property_hash
       new( :name        => mountpoint,
            :mountpoint  => mountpoint,
+           :ensure      => :present,
            :storage_url => storage_url,
            :owner       => options.sub(/.*user_id=(\d+).*/, '\1'),
            :group       => options.sub(/.*group_id=(\d+).*/, '\1'),
@@ -44,6 +49,10 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
         resource.provider = prov
       end
     end
+  end
+
+  def exists?
+    @property_hash[:ensure] == :present
   end
 
 end

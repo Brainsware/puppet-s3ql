@@ -16,6 +16,8 @@ Puppet::Type.newtype(:s3ql_mount) do
 
   desc 's3ql_mount is a type to create mount.s3ql mounts'
 
+  ensurable
+
   newparam(:mountpoint, :namevar => true) do
     desc "The path to the mountpoint"
   end
