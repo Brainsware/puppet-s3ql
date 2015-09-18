@@ -54,6 +54,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
   def create
     mount_s3ql(@resource[:storage_url], @resource[:mountpoint])
+    @property_hash = @resource
   end
 
   def destroy
