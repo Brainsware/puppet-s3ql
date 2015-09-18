@@ -56,6 +56,41 @@ Name of the s3ql package. Default: `s3ql`
 
 Whether to install or remove, or keep the s3ql package in specific version. Default: `present`
 
+
+### s3ql::authinfo
+
+This defined type creates `~/.s3ql/authinfo2` files, storing credentials to the
+various backends. It's basically just a very thin wrapper around
+[ini_setting](https://github.com/puppetlabs/puppetlabs-inifile) :)
+
+#### s3ql::authinfo::ensure
+
+Whether to add or remove this entry. Default: `present`
+
+#### s3ql::authinfo::owner
+#### s3ql::authinfo::group
+#### s3ql::authinfo::home
+
+Owner, group and HOME have to be set. HOME should point to the fully-qualified path of ~/.s3ql.
+
+#### s3ql::authinfo::backend
+
+Which backend to configure. Can be `gs`, `s3`, etc...
+
+#### s3ql::authinfo::storage_url
+
+The storage-url for which these credentials are valid.
+
+#### s3ql::authinfo::backend_login
+#### s3ql::authinfo::backend_password
+
+The login and password. For `gs` there's a special `backend-login` `oauth2`
+which activates OAuth authentication.
+
+#### s3ql::authinfo::fs_passphrase
+
+The passphrase with which this filesystem is encrypted.
+
 ## Limitations
 
 Given the rather clumsy installation on RHEL (or rather: the lack of package
