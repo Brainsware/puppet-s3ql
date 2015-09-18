@@ -61,7 +61,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
     @property_hash.clear
   end
 
-  # get all records.config entries at the beginning
+  # get all fuse.s3ql mounted filesystems at the beginning
   def self.instances
     mounts = mount.split("\n").select { |line| line.include? "fuse.s3ql" }
     mounts.collect do |mnt|
