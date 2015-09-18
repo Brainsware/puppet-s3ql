@@ -34,15 +34,39 @@ too. It does support creating [authinfo files](http://www.rath.org/s3ql-docs/aut
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here. 
+First, let's install it:
+
+```puppet
+# only on Ubuntu:
+apt::ppa { 'ppa:nikratio/s3ql': }
+include s3ql
+```
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)
+### s3ql
+
+This class is only responsible for installing the s3ql package
+
+#### s3ql::package_name
+
+Name of the s3ql package. Default: `s3ql`
+
+#### s3ql::package_ensure
+
+Whether to install or remove, or keep the s3ql package in specific version. Default: `present`
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Given the rather clumsy installation on RHEL (or rather: the lack of package
+repositories), this module will currently only work properly on:
+
+- Archlinux
+- Debian
+- FreeBSD
+- Gentoo
+- OS X
+- Ubuntu
 
 ## Development
 
