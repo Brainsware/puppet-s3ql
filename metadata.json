@@ -1,0 +1,33 @@
+{
+  "name": "brainsware-s3ql",
+  "version": "0.1.0",
+  "author": "brainsware",
+  "summary": "This module installs s3ql and helps manage volumes",
+  "license": "Apache-2.0",
+  "source": "https://github.com/Brainsware/puppet-s3ql",
+  "project_page": "https://github.com/Brainsware/puppet-s3ql",
+  "issues_url": "https://github.com/Brainsware/puppet-s3ql/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    }
+  ]
+}
