@@ -25,7 +25,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   # get all records.config entries at the beginning
   def self.instances
     mounts = mount.split("\n").select { |line| line.include? "fuse.s3ql" }
-    mounts.each do |mnt|
+    mounts.collect do |mnt|
       storage_url, _, mountpoint, _, _, options = mnt.split
       # and initialize @property_hash
       new( :name        => mountpoint,
