@@ -24,7 +24,42 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   commands  :unused_umount_s3ql  => 'umount.s3ql'
   commands  :mount  => 'mount'
 
-  mk_resource_methods
+  def get_home(uid)
+    require 'etc'
+    if uid.is_a? Integer
+      Etc.getpwuid(uid)[:dir]
+    elsif uid.is_a? String
+      Etc.getpwnam(uid)[:dir]
+    end
+    # nil is fine too..
+  end
+
+  def commands_wrapper(command, *arguments)
+    env = { 'HOME' => get_home(@resource[:owner]) }
+    Puppet::Util::Execution.execute([command, arguments], {
+      :failonfail => true,
+      :combine => true,
+      :uid => @resource[:owner],
+      :gid => @resource[:group],
+      :custom_environment => env,
+    })
+  end
+
+  def mount_s3ql(*arguments)
+    commands_wrapper('mount.s3ql', arguments)
+  end
+  def umount_s3ql(*arguments)
+    commands_wrapper('umount.s3ql', arguments)
+  end
+
+  def create
+    mount_s3ql(@resource[:storage_url], @resource[:mountpoint])
+  end
+
+  def destroy
+    umount_s3ql(@resource[:mountpoint])
+    @property_hash.clear
+  end
 
   # get all records.config entries at the beginning
   def self.instances
