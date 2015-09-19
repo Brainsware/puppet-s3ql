@@ -46,7 +46,7 @@ describe 's3ql::authinfo', :type => :define do
             :fs_passphrase    => 'v very secure passphrase for filesystem encryption',
           }}
 
-          it { is_expected.to compile.with_all_deps }
+          it { is_expected.to raise_error(Puppet::Error, /is not an absolute path/) }
         end
       end
     end
