@@ -15,6 +15,22 @@ describe 's3ql' do
 
           it { is_expected.to contain_package('s3ql').with_ensure('present') }
         end
+
+        context "s3ql class orriding all parameters" do
+          let(:params) {{
+            :package_name     => 'python3-s3ql',
+            :package_ensure   => 'latest',
+            :package_provider => 'pip',
+          }}
+
+          it { is_expected.to compile.with_all_deps }
+
+          it {
+            is_expected.to contain_package('python3-s3ql')
+              .with_ensure('latest')
+              .with_provider('pip')
+          }
+        end
       end
     end
   end

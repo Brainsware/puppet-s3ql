@@ -56,6 +56,9 @@ Name of the s3ql package. Default: `s3ql`
 
 Whether to install or remove, or keep the s3ql package in specific version. Default: `present`
 
+#### s3ql::package_provider
+
+Maybe some day s3ql will be easily installable via `pip` then you can override this parameter. Default: `undef`
 
 ### s3ql::authinfo
 
