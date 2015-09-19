@@ -1,4 +1,4 @@
-[![Puppet Forge](http://img.shields.io/puppetforge/v/brainsware/s3ql.svg)](https://forge.puppetlabs.com/brainsware/s3ql) 
+[![Puppet Forge](https://img.shields.io/puppetforge/v/brainsware/s3ql.svg)](https://forge.puppetlabs.com/brainsware/s3ql) 
 [![Build Status](https://img.shields.io/travis/Brainsware/puppet-s3ql/master.svg)](https://travis-ci.org/Brainsware/puppet-s3ql) 
 
 #### Table of Contents
