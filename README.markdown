@@ -181,8 +181,5 @@ repositories), this module will currently only work properly on:
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You may also add any additional sections you feel are necessary or important to include here. Please use the `## ` header. 
+If you find a way to install this module painfree under RHEL, I would very
+happily accept your patch! Please follow our guidlines in CONTRIBUTING.md.
