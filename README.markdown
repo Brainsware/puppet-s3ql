@@ -120,6 +120,48 @@ which activates OAuth authentication.
 
 The passphrase with which this filesystem is encrypted.
 
+### s3ql_mount
+
+#### s3ql_mount::mountpoint
+
+The path to the mountpoint. Default: `name`
+
+#### s3ql_mount::storage_url
+
+The storage-url to mount
+
+#### s3ql_mount::backend_login
+
+The backend-login for the specified storage-url.
+If ommited, it will be read from authfile.
+
+#### s3ql_mount::backend_password
+
+The backend-login for the specified storage-url.
+If ommited, it will be read from authfile.
+
+#### s3ql_mount::fs_passphrase
+
+The fs-passphrase for the specified storage-url.
+If ommited, it will be read from authfile.
+
+#### s3ql_mount::backend_options
+
+Additional options passed to mount.s3ql when mounting this filesystem.
+
+#### s3ql_mount::owner
+
+The owner this filesytem will belong to. (normalized to uid)
+
+#### s3ql_mount::group
+
+The group this filesytem will belong to. (normalized to gid)
+
+#### s3ql_mount::backend
+
+The backend used. This property is read-only.
+
+
 ## Limitations
 
 Given the rather clumsy installation on RHEL (or rather: the lack of package

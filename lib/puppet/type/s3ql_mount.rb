@@ -20,6 +20,7 @@ Puppet::Type.newtype(:s3ql_mount) do
 
   newparam(:mountpoint, :namevar => true) do
     desc "The path to the mountpoint"
+    newvalues(%r{^/})
   end
 
   newproperty(:storage_url) do
@@ -46,7 +47,7 @@ Puppet::Type.newtype(:s3ql_mount) do
     desc <<-EOS
       The fs-passphrase for the specified storage-url.
       
-      If omited (from authfile) this filesystem will be plain-text.
+      If ommited, it will be read from authfile.
     EOS
   end
 
@@ -56,11 +57,27 @@ Puppet::Type.newtype(:s3ql_mount) do
 
 
   newproperty(:owner) do
-    desc "The owner this filesytem will belong to."
+    desc "The owner this filesytem will belong to. (normalized to uid)"
+    munge do |val|
+      begin
+        Integer(val)
+      rescue
+        require 'etc'
+        Etc.getpwnam(val)[:uid]
+      end
+    end
   end
 
   newproperty(:group) do
-    desc "The group this filesytem will belong to."
+    desc "The group this filesytem will belong to. (normalized to gid)"
+    munge do |val|
+      begin
+        Integer(val)
+      rescue
+        require 'etc'
+        Etc.getgrnam(val)[:gid]
+      end
+    end
   end
 
   newproperty(:backend) do
