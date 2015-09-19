@@ -11,7 +11,9 @@
 
 ## Overview
 
-This is a puppet module to manage [s3ql](http://www.rath.org/s3ql-docs/about.html) installation, configuration and mounts.
+This is a puppet module to manage
+[s3ql](http://www.rath.org/s3ql-docs/about.html) installation, authentication
+configuration and mounts.
 
 
 ## Setup
@@ -38,8 +40,31 @@ First, let's install it:
 
 ```puppet
 # only on Ubuntu:
-apt::ppa { 'ppa:nikratio/s3ql': }
+# apt::ppa { 'ppa:nikratio/s3ql': }
+# everywhere:
 include s3ql
+```
+
+Next, we can setup our authentication:
+
+```puppet
+s3ql::authinfo { 'gs backend for www-data fluffy bucket':
+  backend          => 'gs',
+  storage_url      => 'gs://fluffy/example',
+  backend_login    => 'oauth2',
+  backend_password => 'actually a very long and secure oauth token',
+  fs_passphrase    => 'also a very long and very secure passphrase for encrypting this filesystem',
+}
+```
+
+And finally, we can mount it:
+
+```puppet
+s3ql_mount { '/srv/web/example/htdocs/uploads':
+  ensure      => 'present',
+  owner       => 'www-data'.
+  group       => 'www-data',
+  storage_url => 'gs://fluffy/example',
 ```
 
 ## Reference
