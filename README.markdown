@@ -1,3 +1,6 @@
+[![Puppet Forge](http://img.shields.io/puppetforge/v/brainsware/s3ql.svg)](https://forge.puppetlabs.com/brainsware/s3ql) 
+[![Build Status](https://img.shields.io/travis/Brainsware/puppet-s3ql/master.svg)](https://travis-ci.org/Brainsware/puppet-s3ql) 
+
 #### Table of Contents
 
 1. [Overview](#overview)
@@ -121,6 +124,8 @@ which activates OAuth authentication.
 The passphrase with which this filesystem is encrypted.
 
 ### s3ql_mount
+
+`s3ql_mount` creates mount.s3ql mounts. It can be used with `puppet resource`.
 
 #### s3ql_mount::mountpoint
 
