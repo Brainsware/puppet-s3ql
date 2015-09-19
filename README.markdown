@@ -62,9 +62,10 @@ And finally, we can mount it:
 ```puppet
 s3ql_mount { '/srv/web/example/htdocs/uploads':
   ensure      => 'present',
-  owner       => 'www-data'.
+  owner       => 'www-data',
   group       => 'www-data',
   storage_url => 'gs://fluffy/example',
+}
 ```
 
 ## Reference
