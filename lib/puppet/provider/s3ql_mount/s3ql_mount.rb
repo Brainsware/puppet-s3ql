@@ -13,16 +13,15 @@
 #   limitations under the License.
 
 Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
-
   desc 'Manage s3ql_mounts'
 
   mk_resource_methods
 
   # This is mostly for documentation purposes, since we have to execute most
   # commands as a specific user, we cannot use the #commands wrapper
-  commands  :unused_mount_s3ql   => 'mount.s3ql'
-  commands  :unused_umount_s3ql  => 'umount.s3ql'
-  commands  :mount  => 'mount'
+  commands :unused_mount_s3ql   => 'mount.s3ql'
+  commands :unused_umount_s3ql  => 'umount.s3ql'
+  commands :mount => 'mount'
 
   def get_home(uid)
     require 'etc'
@@ -36,18 +35,20 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
   def commands_wrapper(command, *arguments)
     env = { 'HOME' => get_home(@resource[:owner]) }
-    Puppet::Util::Execution.execute([command, arguments], {
+    opts = {
       :failonfail => true,
       :combine => true,
       :uid => @resource[:owner],
       :gid => @resource[:group],
       :custom_environment => env,
-    })
+    }
+    Puppet::Util::Execution.execute([command, arguments], opts)
   end
 
   def mount_s3ql(*arguments)
     commands_wrapper('mount.s3ql', arguments)
   end
+
   def umount_s3ql(*arguments)
     commands_wrapper('umount.s3ql', arguments)
   end
@@ -64,23 +65,26 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
   # get all fuse.s3ql mounted filesystems at the beginning
   def self.instances
-    mounts = mount.split("\n").select { |line| line.include? "fuse.s3ql" }
+    mounts = mount.split("\n").select { |line| line.include? 'fuse.s3ql' }
     mounts.collect do |mnt|
       storage_url, _, mountpoint, _, _, options = mnt.split
       # and initialize @property_hash
-      new( :name        => mountpoint,
-           :mountpoint  => mountpoint,
-           :ensure      => :present,
-           :storage_url => storage_url,
-           :owner       => options.sub(/.*user_id=(\d+).*/, '\1'),
-           :group       => options.sub(/.*group_id=(\d+).*/, '\1'),
-           :backend     => storage_url.split(':')[0]
+      new(:name        => mountpoint,
+          :mountpoint  => mountpoint,
+          :ensure      => :present,
+          :storage_url => storage_url,
+          :owner       => options.sub(/.*user_id=(\d+).*/, '\1'),
+          :group       => options.sub(/.*group_id=(\d+).*/, '\1'),
+          :backend     => storage_url.split(':')[0],
          )
     end
   end
 
   def self.prefetch(resources)
     instances.each do |prov|
+      # no, rubocop, we really mean it.
+      # ask @glarizza: http://garylarizza.com/blog/2013/12/15/seriously-what-is-this-provider-doing/
+      # rubocop:disable Lint/AssignmentInCondition
       if resource = resources[prov.name]
         resource.provider = prov
       end
@@ -90,5 +94,4 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   def exists?
     @property_hash[:ensure] == :present
   end
-
 end

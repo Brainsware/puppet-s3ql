@@ -8,31 +8,32 @@ describe 's3ql' do
           facts
         end
 
-        context "s3ql class without any parameters" do
-          let(:params) {{ }}
+        context 's3ql class without any parameters' do
+          let(:params) { {} }
 
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_package('s3ql').with_ensure('present') }
         end
 
-        context "s3ql class orriding all parameters" do
-          let(:params) {{
-            :package_name     => 'python3-s3ql',
-            :package_ensure   => 'latest',
-            :package_provider => 'pip',
-          }}
+        context 's3ql class orriding all parameters' do
+          let(:params) do
+            {
+              :package_name     => 'python3-s3ql',
+              :package_ensure   => 'latest',
+              :package_provider => 'pip',
+            }
+          end
 
           it { is_expected.to compile.with_all_deps }
 
-          it {
+          it do
             is_expected.to contain_package('python3-s3ql')
               .with_ensure('latest')
               .with_provider('pip')
-          }
+          end
         end
       end
     end
   end
-
 end

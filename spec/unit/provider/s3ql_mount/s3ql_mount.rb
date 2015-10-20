@@ -4,16 +4,15 @@ type_class     = Puppet::Type.type(:s3ql_mount)
 provider_class = type_class.provide(:s3ql_mount)
 
 describe provider_class do
-
   context 'with the minimum parameters' do
-    let(:resource) {
+    let(:resource) do
       type_class.new(
         mountpoint: '/mnt',
         storage_url: 'gs://bucket/prefix',
         owner: 'examplewww',
         group: 'examplewww',
       )
-    }
+    end
 
     let(:provider) { resource.provider }
     let(:instance) { provider.class.instance.first }

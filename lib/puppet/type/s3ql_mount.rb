@@ -13,24 +13,23 @@
 #   limitations under the License.
 
 Puppet::Type.newtype(:s3ql_mount) do
-
   desc 's3ql_mount is a type to create mount.s3ql mounts'
 
   ensurable
 
   newparam(:mountpoint, :namevar => true) do
-    desc "The path to the mountpoint"
+    desc 'The path to the mountpoint'
     newvalues(%r{^/})
   end
 
   newproperty(:storage_url) do
-    desc "The storage-url to mount"
+    desc 'The storage-url to mount'
   end
 
   newproperty(:backend_login) do
     desc <<-EOS
       The backend-login for the specified storage-url.
-      
+
       If ommited, it will be read from authfile.
     EOS
   end
@@ -38,7 +37,7 @@ Puppet::Type.newtype(:s3ql_mount) do
   newproperty(:backend_password) do
     desc <<-EOS
       The backend-login for the specified storage-url.
-      
+
       If ommited, it will be read from authfile.
     EOS
   end
@@ -46,18 +45,17 @@ Puppet::Type.newtype(:s3ql_mount) do
   newproperty(:fs_passphrase) do
     desc <<-EOS
       The fs-passphrase for the specified storage-url.
-      
+
       If ommited, it will be read from authfile.
     EOS
   end
 
   newproperty(:backend_options) do
-    desc "Additional options passed to mount.s3ql when mounting this filesystem."
+    desc 'Additional options passed to mount.s3ql when mounting this filesystem.'
   end
 
-
   newproperty(:owner) do
-    desc "The owner this filesytem will belong to. (normalized to uid)"
+    desc 'The owner this filesytem will belong to. (normalized to uid)'
     munge do |val|
       begin
         Integer(val)
@@ -69,7 +67,7 @@ Puppet::Type.newtype(:s3ql_mount) do
   end
 
   newproperty(:group) do
-    desc "The group this filesytem will belong to. (normalized to gid)"
+    desc 'The group this filesytem will belong to. (normalized to gid)'
     munge do |val|
       begin
         Integer(val)
@@ -88,4 +86,3 @@ Puppet::Type.newtype(:s3ql_mount) do
     EOS
   end
 end
-

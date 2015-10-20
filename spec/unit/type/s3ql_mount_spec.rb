@@ -3,7 +3,6 @@ require 'spec_helper'
 type_class = Puppet::Type.type(:s3ql_mount)
 
 describe type_class do
-
   let :params do
     [
       :mountpoint
@@ -36,19 +35,19 @@ describe type_class do
   end
 
   it 'should require a name' do
-    expect {
+    expect do
       type_class.new({})
-    }.to raise_error(Puppet::Error, 'Title or name must be provided')
+    end.to raise_error(Puppet::Error, 'Title or name must be provided')
   end
 
   context 'when passing an UID or GID to owner/group it should be normalized to an Integer' do
     let(:mnt) { type_class.new(:mountpoint => '/mnt', :owner => '1023', :group => 1024) }
 
     it 'should convert uid & gid values to an (unchanged) integer' do
-      expect(mnt[:owner].kind_of?(Integer)).to be true
+      expect(mnt[:owner].is_a?(Integer)).to be true
       expect(mnt[:owner]).to be 1023
 
-      expect(mnt[:group].kind_of?(Integer)).to be true
+      expect(mnt[:group].is_a?(Integer)).to be true
       expect(mnt[:group]).to be 1024
     end
   end
@@ -57,16 +56,14 @@ describe type_class do
     let(:mnt) { type_class.new(:mountpoint => '/mnt', :owner => 'examplewww', :group => 'examplewww') }
 
     it 'should convert uid & gid values to an (unchanged) integer' do
+      Etc.stubs(:getpwnam).with('examplewww').returns(:uid => 33)
+      Etc.stubs(:getgrnam).with('examplewww').returns(:gid => 33)
 
-      Etc.stubs(:getpwnam).with('examplewww').returns({:uid => 33})
-      Etc.stubs(:getgrnam).with('examplewww').returns({:gid => 33})
-
-      expect(mnt[:owner].kind_of?(Integer)).to be true
+      expect(mnt[:owner].is_a?(Integer)).to be true
       expect(mnt[:owner]).to be 33
 
-      expect(mnt[:group].kind_of?(Integer)).to be true
+      expect(mnt[:group].is_a?(Integer)).to be true
       expect(mnt[:group]).to be 33
     end
   end
-
 end
