@@ -1,4 +1,4 @@
-#   Copyright 2015 Brainsware
+#   Copyright 2016 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -47,6 +47,17 @@ Puppet::Type.newtype(:s3ql_mount) do
       The fs-passphrase for the specified storage-url.
 
       If ommited, it will be read from authfile.
+    EOS
+  end
+
+  # this one is not /really/ discoverable.
+  # hence a it is a parameter, not a property of the system
+  newparam(:home) do
+    desc <<-EOS
+      The fully-qualified path to the ~/.s3ql home dir
+
+      This directory will be used cache directory, and as base for the
+      authinfo2 searchpath.
     EOS
   end
 

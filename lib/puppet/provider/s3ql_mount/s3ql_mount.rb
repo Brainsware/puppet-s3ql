@@ -1,4 +1,4 @@
-#   Copyright 2015 Brainsware
+#   Copyright 2016 Brainsware
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -23,26 +23,30 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   commands :unused_umount_s3ql  => 'umount.s3ql'
   commands :mount => 'mount'
 
-  def get_home(uid)
+  def get_s3ql_home(uid)
+    return @resource[:home] unless @resource[:home].nil?
     require 'etc'
     if uid.is_a? Integer
-      Etc.getpwuid(uid)[:dir]
+      File.join(Etc.getpwuid(uid)[:dir], '.s3ql')
     elsif uid.is_a? String
-      Etc.getpwnam(uid)[:dir]
+      File.join(Etc.getpwnam(uid)[:dir], '.s3ql')
     end
     # nil is fine too..
   end
 
   def commands_wrapper(command, *arguments)
-    env = { 'HOME' => get_home(@resource[:owner]) }
+    cachedir = get_s3ql_home(@resource[:owner])
+    authinfo = File.join(cachedir, 'authinfo2')
+
+    all_args = ['--authfile', authinfo, '--cachedir', cachedir, arguments].flatten
+
     opts = {
       :failonfail => true,
       :combine => true,
       :uid => @resource[:owner],
       :gid => @resource[:group],
-      :custom_environment => env,
     }
-    Puppet::Util::Execution.execute([command, arguments], opts)
+    Puppet::Util::Execution.execute([command, all_args], opts)
   end
 
   def mount_s3ql(*arguments)

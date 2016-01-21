@@ -166,6 +166,16 @@ The owner this filesytem will belong to. (normalized to uid)
 
 The group this filesytem will belong to. (normalized to gid)
 
+#### s3ql_mount::home
+
+The fully-qualified path to the ~/.s3ql home dir
+
+This directory will be used cache directory, and as base for the authinfo2
+searchpath.
+
+This parameter is not entirely discoverable. It will default to `$HOME/.s3ql`,
+but this might be wrong for users who have no `$HOME`, for instance.
+
 #### s3ql_mount::backend
 
 The backend used. This property is read-only.
