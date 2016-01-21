@@ -20,6 +20,8 @@ include s3ql
 
 s3ql::authinfo { 'gs backend for www-data fluffy bucket':
   backend          => 'gs',
+  home             => '/var/www/.s3ql',
+  manage_home      => 'true',
   storage_url      => 'gs://fluffy/example',
   backend_login    => 'oauth2',
   backend_password => 'actually a very long and secure oauth token',

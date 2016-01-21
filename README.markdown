@@ -105,6 +105,10 @@ Whether to add or remove this entry. Default: `present`
 
 Owner, group and HOME have to be set. HOME should point to the fully-qualified path of ~/.s3ql.
 
+#### s3ql::authinfo::manage_home
+
+Whether to create the user's .s3ql home directory. Default: `false`
+
 #### s3ql::authinfo::backend
 
 Which backend to configure. Can be `gs`, `s3`, etc...

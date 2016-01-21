@@ -12,8 +12,9 @@ define s3ql::authinfo (
   $backend_login,
   $backend_password,
   $fs_passphrase,
-  $ensure  = 'present',
-  $group   = undef,
+  $ensure      = 'present',
+  $group       = undef,
+  $manage_home = false,
 ) {
 
   validate_re($ensure, '^(present|absent)$')
@@ -23,6 +24,16 @@ define s3ql::authinfo (
   $_group = $group ? {
     undef   => $owner,
     default => $group,
+  }
+
+  if $manage_home {
+    file { $home:
+      ensure  => directory,
+      owner   => $owner,
+      group   => $_group,
+      mode    => '0750',
+      before  => File[$path],
+    }
   }
 
   file { $path:
