@@ -50,7 +50,8 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   end
 
   def mount_s3ql(*arguments)
-    commands_wrapper('mount.s3ql', arguments)
+    all_args = ['--allow-root', arguments].flatten
+    commands_wrapper('mount.s3ql', all_args)
   end
 
   def umount_s3ql(*arguments)
