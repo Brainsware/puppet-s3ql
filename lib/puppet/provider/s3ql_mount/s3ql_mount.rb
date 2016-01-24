@@ -73,13 +73,19 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
     mounts = mount.split("\n").select { |line| line.include? 'fuse.s3ql' }
     mounts.collect do |mnt|
       storage_url, _, mountpoint, _, _, options = mnt.split
+
+      owner = options.sub(/.*user(_id)?=([^,)]+).*/, '\2') if options.include?(/user(_id)?/)
+      owner ||= 0
+      group = options.sub(/.*group(_id)?=([^,)]).*/, '\2') if options.include?(/group(_id)?/)
+      group ||= 0
+
       # and initialize @property_hash
       new(:name        => mountpoint,
           :mountpoint  => mountpoint,
           :ensure      => :present,
           :storage_url => storage_url,
-          :owner       => options.sub(/.*user_id=(\d+).*/, '\1'),
-          :group       => options.sub(/.*group_id=(\d+).*/, '\1'),
+          :owner       => owner,
+          :group       => group,
           :backend     => storage_url.split(':')[0],
          )
     end
