@@ -12,13 +12,14 @@ describe 's3ql::authinfo', :type => :define do
           let(:title) { 'everything is gonna be alright' }
           let(:params) do
             {
-              :owner            => 'www-data',
-              :home             => '/var/www/.s3ql',
               :backend          => 'gs',
               :backend_login    => 'oauth2',
               :backend_password => 'a very long, unique looking oauth2 token',
               :storage_url      => 'gs://bucket/prefix',
               :fs_passphrase    => 'v very secure passphrase for filesystem encryption',
+              :owner            => 'www-data',
+              :group            => 'www-data',
+              :home             => '/var/www/.s3ql',
             }
           end
 
