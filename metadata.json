@@ -1,6 +1,6 @@
 {
   "name": "brainsware-s3ql",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "brainsware",
   "summary": "This module installs s3ql and helps manage volumes",
   "license": "Apache-2.0",
