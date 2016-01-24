@@ -104,6 +104,7 @@ Whether to add or remove this entry. Default: `present`
 #### s3ql::authinfo::home
 
 Owner, group and HOME have to be set. HOME should point to the fully-qualified path of ~/.s3ql.
+Default: `0`, and `/root/.s3ql`
 
 #### s3ql::authinfo::manage_home
 
@@ -160,11 +161,11 @@ Additional options passed to mount.s3ql when mounting this filesystem.
 
 #### s3ql_mount::owner
 
-The owner this filesytem will belong to. (normalized to uid)
+The owner this filesytem will belong to. (normalized to uid). Default: 0
 
 #### s3ql_mount::group
 
-The group this filesytem will belong to. (normalized to gid)
+The group this filesytem will belong to. (normalized to gid). Default: 0
 
 #### s3ql_mount::home
 

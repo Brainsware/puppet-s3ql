@@ -5,41 +5,36 @@
 # It's basically just a very thin wrapper around ini_setting :)
 #
 define s3ql::authinfo (
-  $owner,
-  $home,
   $backend,
   $storage_url,
   $backend_login,
   $backend_password,
   $fs_passphrase,
   $ensure      = 'present',
-  $group       = undef,
   $manage_home = false,
+  $owner       = 0,
+  $group       = 0,
+  $home        = '/root/.s3ql'
 ) {
 
   validate_re($ensure, '^(present|absent)$')
   validate_absolute_path($home)
   $path = "${home}/authinfo2"
 
-  $_group = $group ? {
-    undef   => $owner,
-    default => $group,
-  }
-
   if $manage_home {
     file { $home:
-      ensure  => directory,
-      owner   => $owner,
-      group   => $_group,
-      mode    => '0750',
-      before  => File[$path],
+      ensure => 'directory',
+      owner  => $owner,
+      group  => $group,
+      mode   => '0750',
+      before => File[$path],
     }
   }
 
   file { $path:
     ensure => $ensure,
     owner  => $owner,
-    group  => $_group,
+    group  => $group,
     mode   => '0400',
   }
 

@@ -67,6 +67,7 @@ Puppet::Type.newtype(:s3ql_mount) do
 
   newproperty(:owner) do
     desc 'The owner this filesytem will belong to. (normalized to uid)'
+    defaultto 0
     munge do |val|
       begin
         Integer(val)
@@ -79,6 +80,7 @@ Puppet::Type.newtype(:s3ql_mount) do
 
   newproperty(:group) do
     desc 'The group this filesytem will belong to. (normalized to gid)'
+    defaultto 0
     munge do |val|
       begin
         Integer(val)
