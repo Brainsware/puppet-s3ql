@@ -74,9 +74,9 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
     mounts.collect do |mnt|
       storage_url, _, mountpoint, _, _, options = mnt.split
 
-      owner = options.sub(/.*user(_id)?=([^,)]+).*/, '\2') if options.include?(/user(_id)?/)
+      owner = options.sub(/.*user(_id)?=([^,)]+).*/, '\2') if options =~ /user(_id)?/
       owner ||= 0
-      group = options.sub(/.*group(_id)?=([^,)]).*/, '\2') if options.include?(/group(_id)?/)
+      group = options.sub(/.*group(_id)?=([^,)]).*/, '\2') if options =~ /group(_id)?/
       group ||= 0
 
       # and initialize @property_hash
