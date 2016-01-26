@@ -98,4 +98,8 @@ Puppet::Type.newtype(:s3ql_mount) do
       This property is read-only.
     EOS
   end
+
+  autorequire(:package) do
+    's3ql'
+  end
 end

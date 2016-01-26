@@ -28,8 +28,9 @@ describe 's3ql' do
           it { is_expected.to compile.with_all_deps }
 
           it do
-            is_expected.to contain_package('python3-s3ql')
+            is_expected.to contain_package('s3ql')
               .with_ensure('latest')
+              .with_name('python3-s3ql')
               .with_provider('pip')
           end
         end

@@ -9,8 +9,9 @@ class s3ql (
   $package_provider = undef,
 ) {
 
-  package { $package_name:
+  package { 's3ql':
     ensure   => $package_ensure,
+    name     => $package_name,
     provider => $package_provider,
   }
 }
