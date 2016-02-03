@@ -25,6 +25,7 @@ describe type_class do
     [
       :mountpoint,
       :home,
+      :force,
     ]
   end
 

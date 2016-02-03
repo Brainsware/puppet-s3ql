@@ -177,6 +177,11 @@ searchpath.
 This parameter is not entirely discoverable. It will default to `$HOME/.s3ql`,
 but this might be wrong for users who have no `$HOME`, for instance.
 
+#### s3ql_mount::force
+
+If a `mount.s3ql` fails, we'll try to rescue by running `fsck.s3ql`. This
+flag determines whether to run `fsck.s3ql` with `--force`. Default: `false`
+
 #### s3ql_mount::backend
 
 The backend used. This property is read-only.

@@ -61,6 +61,20 @@ Puppet::Type.newtype(:s3ql_mount) do
     EOS
   end
 
+  # this one is not discoverable, hence a it is a parameter
+  newparam(:force) do
+    desc <<-EOS
+      In case of mount failure, try to fsck the mountpoint with --force
+
+      WARNING: THIS WILL LOSE YOU DATA.
+    EOS
+    defaultto :false
+    munge do |val|
+      :false if [ false, 'false', :false].include? val
+      :true  if [ true, 'true', :true].include? val
+    end
+  end
+
   newproperty(:backend_options) do
     desc 'Additional options passed to mount.s3ql when mounting this filesystem.'
   end

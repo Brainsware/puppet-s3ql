@@ -21,6 +21,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   # commands as a specific user, we cannot use the #commands wrapper
   commands :unused_mount_s3ql   => 'mount.s3ql'
   commands :unused_umount_s3ql  => 'umount.s3ql'
+  commands :unused_fsck_s3ql    => 'fsck.s3ql'
   commands :mount => 'mount'
 
   def get_s3ql_home(uid)
@@ -42,7 +43,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
     opts = {
       :failonfail => true,
-      :combine => true,
+      :combine    => true,
       :uid => @resource[:owner],
       :gid => @resource[:group],
     }
@@ -51,7 +52,15 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
   def mount_s3ql(*arguments)
     all_args = ['--allow-other', arguments].flatten
-    commands_wrapper('mount.s3ql', all_args)
+    begin
+      commands_wrapper('mount.s3ql', all_args)
+    rescue Puppet::ExecutionFailure
+      fsck_args = []
+      fsck_args << '--batch'
+      fsck_args << '--force' if @resource[:force]
+      commands_wrapper('fsck.s3ql', fsck_args)
+      commands_wrapper('mount.s3ql', all_args)
+    end
   end
 
   def umount_s3ql(*arguments)
