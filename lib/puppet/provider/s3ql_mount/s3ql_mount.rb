@@ -58,6 +58,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
       fsck_args = []
       fsck_args << '--batch'
       fsck_args << '--force' if @resource[:force]
+      fsck_args << @resource[:storage_url]
       commands_wrapper('fsck.s3ql', fsck_args)
       commands_wrapper('mount.s3ql', all_args)
     end
