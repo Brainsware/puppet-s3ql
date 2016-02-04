@@ -182,6 +182,11 @@ but this might be wrong for users who have no `$HOME`, for instance.
 If a `mount.s3ql` fails, we'll try to rescue by running `fsck.s3ql`. This
 flag determines whether to run `fsck.s3ql` with `--force`. Default: `false`
 
+#### s3ql_mount::upload_inverval
+
+Interval in seconds between complete metadata uploads. Set to 0 to disable.
+Default: 24h. (86400s)
+
 #### s3ql_mount::backend
 
 The backend used. This property is read-only.

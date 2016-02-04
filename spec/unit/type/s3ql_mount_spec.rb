@@ -26,6 +26,7 @@ describe type_class do
       :mountpoint,
       :home,
       :force,
+      :upload_interval,
     ]
   end
 
