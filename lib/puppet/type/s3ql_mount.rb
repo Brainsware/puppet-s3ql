@@ -75,6 +75,15 @@ Puppet::Type.newtype(:s3ql_mount) do
     end
   end
 
+  # this one is not discoverable, hence a it is a parameter
+  newparam(:upload_interval) do
+    desc <<-EOS
+      Interval in seconds between complete metadata uploads.
+      Set to 0 to disable. Default: 24h. (86400s)
+    EOS
+    defaultto 86400
+  end
+
   newproperty(:backend_options) do
     desc 'Additional options passed to mount.s3ql when mounting this filesystem.'
   end

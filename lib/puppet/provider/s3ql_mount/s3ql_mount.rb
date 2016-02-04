@@ -51,15 +51,18 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   end
 
   def mount_s3ql(*arguments)
-    all_args = ['--allow-other', arguments].flatten
+    mount_args = ['--allow-other', '--metadata-upload-interval',
+                  @resource[:upload_inverval], arguments].flatten
     begin
-      commands_wrapper('mount.s3ql', all_args)
+      commands_wrapper('mount.s3ql', mount_args)
     rescue Puppet::ExecutionFailure
       fsck_args = []
       fsck_args << '--batch'
       fsck_args << '--force' if @resource[:force]
+      fsck_args << @resource[:storage_url]
       commands_wrapper('fsck.s3ql', fsck_args)
-      commands_wrapper('mount.s3ql', all_args)
+      # retry
+      commands_wrapper('mount.s3ql', mount_args)
     end
   end
 
