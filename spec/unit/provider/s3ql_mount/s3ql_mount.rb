@@ -11,6 +11,7 @@ describe provider_class do
         storage_url: 'gs://bucket/prefix',
         owner: 'examplewww',
         group: 'examplewww',
+        allow_other: true,
       )
     end
 
