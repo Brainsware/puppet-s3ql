@@ -10,11 +10,11 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 1.0.0"
+      "version_requirement": ">= 1.0.0 <= 5.0.0"
     },
     {
       "name": "puppetlabs-inifile",
-      "version_requirement": ">= 1.4.0"
+      "version_requirement": ">= 1.4.0 <= 3.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -28,5 +28,14 @@
     {
       "operatingsystem": "FreeBSD"
     }
-  ]
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "pdk-version": "1.5.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates",
+  "template-ref": "tags/1.5.0-0-gd1b3eca"
 }

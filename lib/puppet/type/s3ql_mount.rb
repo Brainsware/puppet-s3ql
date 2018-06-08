@@ -17,7 +17,7 @@ Puppet::Type.newtype(:s3ql_mount) do
 
   ensurable
 
-  newparam(:mountpoint, :namevar => true) do
+  newparam(:mountpoint, namevar: true) do
     desc 'The path to the mountpoint'
     newvalues(%r{^/})
   end
@@ -70,8 +70,8 @@ Puppet::Type.newtype(:s3ql_mount) do
     EOS
     defaultto :false
     munge do |val|
-      :false if [ false, 'false', :false].include? val
-      :true  if [ true, 'true', :true].include? val
+      :false if [false, 'false', :false].include? val
+      :true  if [true, 'true', :true].include? val
     end
   end
 
@@ -81,7 +81,7 @@ Puppet::Type.newtype(:s3ql_mount) do
       Interval in seconds between complete metadata uploads.
       Set to 0 to disable. Default: 24h. (86400s)
     EOS
-    defaultto 86400
+    defaultto 86_400
   end
 
   newproperty(:backend_options) do
