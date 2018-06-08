@@ -114,6 +114,19 @@ Puppet::Type.newtype(:s3ql_mount) do
     end
   end
 
+  newparam(:allow_other) do
+    desc <<-EOS
+      Whether to allow "other" to access this mountpoint
+
+      The default is `false`. To allow it, also make sure to set `allow_other` in `s3ql`.
+    EOS
+    defaultto :false
+    munge do |val|
+      :false if [false, 'false', :false].include? val
+      :true  if [true, 'true', :true].include? val
+    end
+  end
+
   newproperty(:backend) do
     desc <<-EOS
       The backend used.

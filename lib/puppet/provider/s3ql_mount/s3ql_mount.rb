@@ -50,8 +50,11 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
     Puppet::Util::Execution.execute([command, all_args], opts)
   end
 
+  # TODO: This *arguments paramether is kinda pointless
   def mount_s3ql(*arguments)
-    mount_args = ['--allow-other', '--metadata-upload-interval',
+    allow_other = ''
+    allow_other = '--allow-other' if @resource[:allow_other]
+    mount_args = [allow_other, '--metadata-upload-interval',
                   @resource[:upload_inverval], arguments].flatten
     begin
       commands_wrapper('mount.s3ql', mount_args)
@@ -90,6 +93,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
       owner ||= 0
       group = options.sub(%r{.*group(_id)?=([^,)]).*}, '\2') if options =~ %r{group(_id)?}
       group ||= 0
+      # XXX: is allow_others in options?
 
       # and initialize @property_hash
       new(name: mountpoint,
