@@ -39,9 +39,7 @@ describe type_class do
     parameters.each do |param|
       expect(type_class.parameters.map).to be_include(param)
     end
-  end
-
-  it 'has expected parameters' do
+    # XXX: what in the world is the distinction between parameters and params??
     params.each do |param|
       expect(type_class.parameters).to be_include(param)
     end
