@@ -19,6 +19,7 @@ describe type_class do
       :owner,
       :group,
       :backend,
+      :allow_other,
     ]
   end
   let :parameters do

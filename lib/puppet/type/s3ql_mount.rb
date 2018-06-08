@@ -114,7 +114,7 @@ Puppet::Type.newtype(:s3ql_mount) do
     end
   end
 
-  newparam(:allow_other) do
+  newproperty(:allow_other) do
     desc <<-EOS
       Whether to allow "other" to access this mountpoint
 
