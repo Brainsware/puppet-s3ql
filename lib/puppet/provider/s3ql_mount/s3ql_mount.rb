@@ -89,11 +89,23 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
     mounts.map do |mnt|
       storage_url, _, mountpoint, _, _, options = mnt.split
 
-      owner = options.sub(%r{.*user(_id)?=([^,)]+).*}, '\2') if options =~ %r{user(_id)?}
+      opts_hsh = options.split(',').map { |o|
+        k = o
+        v = true
+        if o.include?('=')
+          k, v = split('=')
+        end
+        [k, v]
+      }.to_h
+
+      owner = opts_hsh['user']
+      owner ||= opts_hsh['user_id']
       owner ||= 0
-      group = options.sub(%r{.*group(_id)?=([^,)]).*}, '\2') if options =~ %r{group(_id)?}
+      group = opts_hsh['group']
+      group ||= opts_hsh['group_id']
       group ||= 0
-      # XXX: is allow_others in options?
+      allow_other = opts_hsh['allow_other']
+      allow_other ||= false
 
       # and initialize @property_hash
       new(name: mountpoint,
@@ -102,7 +114,8 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
           storage_url: storage_url,
           owner: owner,
           group: group,
-          backend: storage_url.split(':')[0])
+          backend: storage_url.split(':')[0],
+          allow_other: allow_other)
     end
   end
 
