@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 's3ql::authinfo', :type => :define do
+describe 's3ql::authinfo', type: :define do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
@@ -12,14 +12,14 @@ describe 's3ql::authinfo', :type => :define do
           let(:title) { 'everything is gonna be alright' }
           let(:params) do
             {
-              :backend          => 'gs',
-              :backend_login    => 'oauth2',
-              :backend_password => 'a very long, unique looking oauth2 token',
-              :storage_url      => 'gs://bucket/prefix',
-              :fs_passphrase    => 'v very secure passphrase for filesystem encryption',
-              :owner            => 'www-data',
-              :group            => 'www-data',
-              :home             => '/var/www/.s3ql',
+              backend: 'gs',
+              backend_login: 'oauth2',
+              backend_password: 'a very long, unique looking oauth2 token',
+              storage_url: 'gs://bucket/prefix',
+              fs_passphrase: 'v very secure passphrase for filesystem encryption',
+              owner: 'www-data',
+              group: 'www-data',
+              home: '/var/www/.s3ql',
             }
           end
 
@@ -41,17 +41,17 @@ describe 's3ql::authinfo', :type => :define do
           let(:title) { 'wrong home' }
           let(:params) do
             {
-              :owner            => 'www-data',
-              :home             => '~/.s3ql',
-              :backend          => 'gs',
-              :backend_login    => 'oauth2',
-              :backend_password => 'a very long, unique looking oauth2 token',
-              :storage_url      => 'gs://bucket/prefix',
-              :fs_passphrase    => 'v very secure passphrase for filesystem encryption',
+              owner: 'www-data',
+              home: '~/.s3ql',
+              backend: 'gs',
+              backend_login: 'oauth2',
+              backend_password: 'a very long, unique looking oauth2 token',
+              storage_url: 'gs://bucket/prefix',
+              fs_passphrase: 'v very secure passphrase for filesystem encryption',
             }
           end
 
-          it { is_expected.to raise_error(Puppet::Error, /is not an absolute path/) }
+          it { is_expected.to raise_error(Puppet::Error, %r{is not an absolute path}) }
         end
       end
     end

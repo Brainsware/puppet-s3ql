@@ -19,10 +19,10 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
   # This is mostly for documentation purposes, since we have to execute most
   # commands as a specific user, we cannot use the #commands wrapper
-  commands :unused_mount_s3ql   => 'mount.s3ql'
-  commands :unused_umount_s3ql  => 'umount.s3ql'
-  commands :unused_fsck_s3ql    => 'fsck.s3ql'
-  commands :mount => 'mount'
+  commands unused_mount_s3ql: 'mount.s3ql'
+  commands unused_umount_s3ql: 'umount.s3ql'
+  commands unused_fsck_s3ql: 'fsck.s3ql'
+  commands mount: 'mount'
 
   def get_s3ql_home(uid)
     return @resource[:home] unless @resource[:home].nil?
@@ -42,10 +42,10 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
     all_args = ['--authfile', authinfo, '--cachedir', cachedir, arguments].flatten
 
     opts = {
-      :failonfail => true,
-      :combine    => true,
-      :uid => @resource[:owner],
-      :gid => @resource[:group],
+      failonfail: true,
+      combine: true,
+      uid: @resource[:owner],
+      gid: @resource[:group],
     }
     Puppet::Util::Execution.execute([command, all_args], opts)
   end
@@ -83,23 +83,22 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
   # get all fuse.s3ql mounted filesystems at the beginning
   def self.instances
     mounts = mount.split("\n").select { |line| line.include? 'fuse.s3ql' }
-    mounts.collect do |mnt|
+    mounts.map do |mnt|
       storage_url, _, mountpoint, _, _, options = mnt.split
 
-      owner = options.sub(/.*user(_id)?=([^,)]+).*/, '\2') if options =~ /user(_id)?/
+      owner = options.sub(%r{.*user(_id)?=([^,)]+).*}, '\2') if options =~ %r{user(_id)?}
       owner ||= 0
-      group = options.sub(/.*group(_id)?=([^,)]).*/, '\2') if options =~ /group(_id)?/
+      group = options.sub(%r{.*group(_id)?=([^,)]).*}, '\2') if options =~ %r{group(_id)?}
       group ||= 0
 
       # and initialize @property_hash
-      new(:name        => mountpoint,
-          :mountpoint  => mountpoint,
-          :ensure      => :present,
-          :storage_url => storage_url,
-          :owner       => owner,
-          :group       => group,
-          :backend     => storage_url.split(':')[0],
-         )
+      new(name: mountpoint,
+          mountpoint: mountpoint,
+          ensure: :present,
+          storage_url: storage_url,
+          owner: owner,
+          group: group,
+          backend: storage_url.split(':')[0])
     end
   end
 

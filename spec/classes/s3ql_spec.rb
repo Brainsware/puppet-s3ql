@@ -19,9 +19,9 @@ describe 's3ql' do
         context 's3ql class orriding all parameters' do
           let(:params) do
             {
-              :package_name     => 'python3-s3ql',
-              :package_ensure   => 'latest',
-              :package_provider => 'pip',
+              package_name: 'python3-s3ql',
+              package_ensure: 'latest',
+              package_provider: 'pip',
             }
           end
 

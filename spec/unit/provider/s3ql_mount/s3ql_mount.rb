@@ -17,7 +17,7 @@ describe provider_class do
     let(:provider) { resource.provider }
     let(:instance) { provider.class.instance.first }
 
-    it 'should be an instance of the S3ql_mount' do
+    it 'is an instance of the S3ql_mount' do
       expect(provider).to be_an_instance_of Puppet::Type::S3ql_mount::S3ql_mount
     end
   end
