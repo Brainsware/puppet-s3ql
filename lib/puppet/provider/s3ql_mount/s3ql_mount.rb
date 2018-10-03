@@ -88,7 +88,7 @@ Puppet::Type.type(:s3ql_mount).provide(:s3ql_mount) do
 
       owner = options.sub(%r{.*user(_id)?=([^,)]+).*}, '\2') if options =~ %r{user(_id)?}
       owner ||= 0
-      group = options.sub(%r{.*group(_id)?=([^,)]).*}, '\2') if options =~ %r{group(_id)?}
+      group = options.sub(%r{.*group(_id)?=([^,)]+).*}, '\2') if options =~ %r{group(_id)?}
       group ||= 0
 
       # and initialize @property_hash
